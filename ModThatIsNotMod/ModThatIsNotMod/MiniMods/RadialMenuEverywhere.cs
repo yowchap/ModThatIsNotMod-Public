@@ -61,7 +61,7 @@ namespace ModThatIsNotMod.MiniMods
                 }
             }
 
-            if (Preferences.utilGunInRadialMenu.value)
+            if (Preferences.utilGunInRadialMenu)
             {
                 if (level == 16 || level == 18 || level == 19 || level == 22 || level == 23)
                 {

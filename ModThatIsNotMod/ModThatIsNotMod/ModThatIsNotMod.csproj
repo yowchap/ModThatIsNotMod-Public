@@ -156,6 +156,7 @@
     <Compile Include="MonoBehaviours\Shotgun.cs" />
     <Compile Include="MonoBehaviours\SimpleGunModifiers.cs" />
     <Compile Include="MonoBehaviours\InstantiateOnFire.cs" />
+    <Compile Include="Notifications.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Internals\Preferences.cs" />
     <Compile Include="Pooling\SimplePool.cs" />
@@ -173,7 +174,8 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
-    <EmbeddedResource Include="BoneMenu\bonemenu.asset" />
+    <EmbeddedResource Include="Assets\bonemenu.asset" />
+    <EmbeddedResource Include="Assets\notifications.asset" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

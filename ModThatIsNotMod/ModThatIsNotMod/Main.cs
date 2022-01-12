@@ -14,7 +14,7 @@ namespace ModThatIsNotMod
         public const string Name = "ModThatIsNotMod"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "YOWChap"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "0.2.6"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "0.2.7"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
@@ -53,6 +53,8 @@ namespace ModThatIsNotMod
             MenuManager.InitialSetup();
             DefaultMenu.CreateDefaultElements();
 
+            Notifications.LoadBundleAndSetup();
+
             AdManager.StartCoroutines();
         }
 
@@ -73,7 +75,7 @@ namespace ModThatIsNotMod
 
             if (++levelsLoaded == 1)
                 ItemLoading.LoadMelons();
-            else if (levelsLoaded > 2 && Preferences.reloadItemsOnLevelChange.value)
+            else if (levelsLoaded > 2 && Preferences.reloadItemsOnLevelChange)
                 ItemLoading.ReloadMelons();
 
             CustomItems.OnLevelWasInitialized();
@@ -85,6 +87,8 @@ namespace ModThatIsNotMod
             TabloidMode.DoTabloidStuff();
             AdManager.CreateBaseAd();
 
+            Notifications.SetupNotificationsForScene(buildIndex);
+
             EmbeddedModController.OnSceneWasInitialized(buildIndex, sceneName);
         }
 
@@ -92,6 +96,7 @@ namespace ModThatIsNotMod
         {
             MenuManager.OnUpdate();
             BetterMagEject.OnUpdate();
+            Notifications.UpdateNotifications();
             BackwardsCompatibility.OnUpdate();
             EmbeddedModController.OnUpdate();
         }

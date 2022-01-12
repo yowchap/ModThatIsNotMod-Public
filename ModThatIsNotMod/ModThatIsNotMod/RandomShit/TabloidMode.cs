@@ -15,7 +15,7 @@ namespace ModThatIsNotMod.RandomShit
         /// </summary>
         public static void DoTabloidStuff()
         {
-            if (!Preferences.tabloidMode.value)
+            if (!Preferences.tabloidMode)
                 return;
 
             Canvas canvas = CreateCanvas();

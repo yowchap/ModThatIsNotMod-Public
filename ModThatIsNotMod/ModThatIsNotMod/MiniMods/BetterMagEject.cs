@@ -39,7 +39,7 @@ namespace ModThatIsNotMod.MiniMods
         {
             if (Player.handsExist && Player.controllersExist)
             {
-                if (Preferences.enableMagEjectButton.value)
+                if (Preferences.enableMagEjectButton)
                     UpdateInputValues();
 
                 EjectMags();
@@ -64,14 +64,14 @@ namespace ModThatIsNotMod.MiniMods
         /// </summary>
         private static void EjectMags()
         {
-            if (Preferences.enableMagEjectButton.value)
+            if (Preferences.enableMagEjectButton)
             {
-                if (leftPresses == Preferences.pressesToEjectMag.value)
+                if (leftPresses == Preferences.pressesToEjectMag)
                 {
                     TryEjectMagazine(Player.GetGunInHand(Player.leftHand), true);
                     leftPresses = 0;
                 }
-                if (rightPresses == Preferences.pressesToEjectMag.value)
+                if (rightPresses == Preferences.pressesToEjectMag)
                 {
                     TryEjectMagazine(Player.GetGunInHand(Player.rightHand), true);
                     rightPresses = 0;
@@ -120,12 +120,12 @@ namespace ModThatIsNotMod.MiniMods
                 {
                     int uuid = gun.GetInstanceID();
 
-                    if (!Preferences.overrideMagEjectSettings.value)
+                    if (!Preferences.overrideMagEjectSettings)
                     {
-                        if ((!hadInput && neverAutoEjectGuns.Contains(uuid)) || (hadInput && disableEjectButtonGuns.Contains(uuid)) || (!hadInput && !Preferences.autoEjectEmptyMags.value && !alwaysAutoEjectGuns.Contains(uuid)))
+                        if ((!hadInput && neverAutoEjectGuns.Contains(uuid)) || (hadInput && disableEjectButtonGuns.Contains(uuid)) || (!hadInput && !Preferences.autoEjectEmptyMags && !alwaysAutoEjectGuns.Contains(uuid)))
                             return;
                     }
-                    else if (!hadInput && !Preferences.autoEjectEmptyMags.value)
+                    else if (!hadInput && !Preferences.autoEjectEmptyMags)
                     {
                         return;
                     }

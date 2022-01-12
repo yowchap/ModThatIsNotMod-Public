@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Net.Http;
+using UnityEngine;
 
 namespace ModThatIsNotMod
 {
@@ -42,15 +43,23 @@ namespace ModThatIsNotMod
                         Version usedVersion = new Version(mod.Info.Version);
 
                         // Warn the user if the mod is outdated. I doubt most people will pay attention but I can at least try ¯\_(ツ)_/¯
-                        if (usedVersion.CompareTo(latestVersion) < 0)
+                        int compareResult = usedVersion.CompareTo(latestVersion);
+                        if (compareResult < 0)
                         {
                             ModConsole.Msg(ConsoleColor.Yellow, $"You are using an outdated version of {mod.Info.Name}", LoggingMode.MINIMAL);
                             ModConsole.Msg(ConsoleColor.Yellow, $"Your version: {usedVersion}, Latest version: {latestVersion}", LoggingMode.NORMAL);
                             ModConsole.Msg(ConsoleColor.Yellow, $"Download link: {packageUrl}", LoggingMode.MINIMAL);
+
+                            Notifications.SendNotification($"{mod.Info.Name} is outdated\nYour version: {usedVersion}\nLatest version: {latestVersion}", 10);
+                        }
+                        else if (compareResult == 0)
+                        {
+                            ModConsole.Msg(ConsoleColor.Green, $"You are using the latest version of {mod.Info.Name}!");
                         }
                         else
                         {
-                            ModConsole.Msg(ConsoleColor.Green, $"You are using the latest version of {mod.Info.Name}!");
+                            ModConsole.Msg(ConsoleColor.Yellow, "This is a development build of ModThatIsNotMod so there may be issues.", LoggingMode.MINIMAL);
+                            Notifications.SendNotification("This is a development build of ModThatIsNotMod so there may be issues.", 10, Color.yellow);
                         }
 
                         break;

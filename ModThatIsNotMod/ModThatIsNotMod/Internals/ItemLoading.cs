@@ -58,13 +58,13 @@ namespace ModThatIsNotMod.Internals
                 {
                     // Log info about what items were loaded
                     ModConsole.Msg(ConsoleColor.Blue, $"Loaded {loadedMelonData.itemsLoaded} items from {file} by {loadedMelonData.author}", LoggingMode.MINIMAL);
-                    if (Preferences.loggingMode.value >= LoggingMode.NORMAL)
+                    if (Preferences.loggingMode >= LoggingMode.NORMAL)
                     {
                         foreach (LoadedItemData item in loadedMelonData.loadedItems)
                         {
-                            string comma = Preferences.loggingMode.value >= LoggingMode.VERBOSE ? "," : "";
-                            string categoryAttribute = Preferences.loggingMode.value >= LoggingMode.VERBOSE ? item.category.ToString() : "";
-                            string hiddenAttribute = Preferences.loggingMode.value >= LoggingMode.VERBOSE ? (item.hidden ? "(Hidden)" : "") : "";
+                            string comma = Preferences.loggingMode >= LoggingMode.VERBOSE ? "," : "";
+                            string categoryAttribute = Preferences.loggingMode >= LoggingMode.VERBOSE ? item.category.ToString() : "";
+                            string hiddenAttribute = Preferences.loggingMode >= LoggingMode.VERBOSE ? (item.hidden ? "(Hidden)" : "") : "";
                             ModConsole.Msg($"  - {item.itemName}{comma} {categoryAttribute} {hiddenAttribute}");
                         }
                     }
@@ -248,7 +248,7 @@ namespace ModThatIsNotMod.Internals
             Assembly assembly = Assembly.Load(bytes);
 
             string message = $"[NOTICE] {bundleName} contains executable code";
-            if (Preferences.exportEmbeddedAssemblies.value)
+            if (Preferences.exportEmbeddedAssemblies)
             {
                 message += ", exporting .dll";
                 File.WriteAllBytes(Path.Combine(MelonUtils.UserDataDirectory, exportedAssembliesDir, assembly.GetName().Name + ".dll"), bytes);

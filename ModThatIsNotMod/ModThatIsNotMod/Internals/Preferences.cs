@@ -1,5 +1,6 @@
 ﻿using MelonLoader;
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace ModThatIsNotMod.Internals
@@ -8,6 +9,7 @@ namespace ModThatIsNotMod.Internals
     {
         private static readonly string category = "ModThatIsNotMod";
         private static readonly string debugCategory = "ModThatIsNotModDebug";
+        private static readonly string filePath = "UserData/ModThatIsNotMod.cfg";
 
 
         public static ModPref<LoggingMode> loggingMode = new ModPref<LoggingMode>(debugCategory, "LoggingMode", LoggingMode.NORMAL);
@@ -32,6 +34,11 @@ namespace ModThatIsNotMod.Internals
         public static ModPref<float> menuOffsetY = new ModPref<float>(category, "MenuOffsetY", -0.05f);
         public static ModPref<float> menuOffsetZ = new ModPref<float>(category, "MenuOffsetZ", 0.05f);
 
+        public static ModPref<bool> notificationsOnRightHand = new ModPref<bool>(category, "NotificationsOnRightHand", false);
+        public static ModPref<float> notificationOffsetX = new ModPref<float>(category, "NotificationOffsetX", 0.025f);
+        public static ModPref<float> notificationOffsetY = new ModPref<float>(category, "NotificationOffsetY", 0.15f);
+        public static ModPref<float> notificationOffsetZ = new ModPref<float>(category, "NotificationOffsetZ", 0.05f);
+
         public static ModPref<bool> automaticSpawnGuns = new ModPref<bool>(category, "AutomaticSpawnGuns", false);
         public static ModPref<bool> utilGunInRadialMenu = new ModPref<bool>(category, "UtilGunInRadialMenu", true);
         public static ModPref<string[]> infiniteAmmoGuns = new ModPref<string[]>(category, "InfiniteAmmoGuns", new string[] { "Gun names here", "CaSe SeNsItIvE" });
@@ -44,11 +51,28 @@ namespace ModThatIsNotMod.Internals
 
         public static void Initialize()
         {
-            MelonPreferences.CreateCategory(category);
-            MelonPreferences.CreateCategory(debugCategory);
+            MelonPreferences_Category defaultCategoryObj = MelonPreferences.CreateCategory(category);
+            MelonPreferences_Category debugCategoryObj = MelonPreferences.CreateCategory(debugCategory);
 
-            CreatePrefs();
-            LoadPrefs();
+            if (File.Exists(filePath))
+            {
+                defaultCategoryObj.SetFilePath(filePath);
+                debugCategoryObj.SetFilePath(filePath);
+                CreatePrefs();
+                LoadPrefs();
+                MelonPreferences.Save();
+            }
+            else
+            {
+                CreatePrefs();
+                LoadPrefs();
+                defaultCategoryObj.SetFilePath(filePath);
+                debugCategoryObj.SetFilePath(filePath);
+                MelonPreferences.Save();
+
+                ModConsole.Msg(ConsoleColor.Green, "Your preferences for ModThatIsNotMod have been moved from MelonPreferences.cfg to ModThatIsNotMod.cfg for organizational purposes.", LoggingMode.MINIMAL);
+                Notifications.SendNotification("Your preferences for ModThatIsNotMod have been moved from\nMelonPreferences.cfg\nto\nModThatIsNotMod.cfg\nfor organizational purposes.", 15);
+            }
         }
 
         private static void CreatePrefs()
@@ -74,6 +98,11 @@ namespace ModThatIsNotMod.Internals
             menuOffsetY.CreateEntry();
             menuOffsetZ.CreateEntry();
 
+            notificationsOnRightHand.CreateEntry();
+            notificationOffsetX.CreateEntry();
+            notificationOffsetY.CreateEntry();
+            notificationOffsetZ.CreateEntry();
+
             automaticSpawnGuns.CreateEntry();
             utilGunInRadialMenu.CreateEntry();
             infiniteAmmoGuns.CreateEntry();
@@ -82,8 +111,6 @@ namespace ModThatIsNotMod.Internals
             tabloidMode.CreateEntry(true);
             autoSpawnAds.CreateEntry(true);
             timeBetweenAds.CreateEntry(!autoSpawnAds.ReadValue());
-
-            MelonPreferences.Save();
         }
 
         private static void LoadPrefs()
@@ -111,17 +138,22 @@ namespace ModThatIsNotMod.Internals
             menuOffsetY.ReadValue();
             menuOffsetZ.ReadValue();
 
+            notificationsOnRightHand.ReadValue();
+            notificationOffsetX.ReadValue();
+            notificationOffsetY.ReadValue();
+            notificationOffsetZ.ReadValue();
+
             automaticSpawnGuns.ReadValue();
             utilGunInRadialMenu.ReadValue();
             infiniteAmmoGuns.ReadValue();
 
             // Random prefs
             tabloidMode.ReadValue();
-            if (tabloidMode.value)
+            if (tabloidMode)
                 ModConsole.Msg(ConsoleColor.Magenta, "TABLOID MODE POGGERS", LoggingMode.MINIMAL);
 
             autoSpawnAds.ReadValue();
-            if (autoSpawnAds.value)
+            if (autoSpawnAds)
                 ModConsole.Msg(ConsoleColor.Magenta, "HAPPY FUN TIME MODE POGGERS", LoggingMode.MINIMAL);
 
             timeBetweenAds.ReadValue();

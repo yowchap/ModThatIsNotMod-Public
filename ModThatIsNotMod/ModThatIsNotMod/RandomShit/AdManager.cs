@@ -159,7 +159,7 @@ namespace ModThatIsNotMod.RandomShit
 
         internal static IEnumerator CoSpawnAds()
         {
-            if (!Preferences.autoSpawnAds.value)
+            if (!Preferences.autoSpawnAds)
                 yield break;
 
             yield return new WaitForSeconds(Random.Range(Preferences.timeBetweenAds.value.x, Preferences.timeBetweenAds.value.y));

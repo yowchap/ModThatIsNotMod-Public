@@ -33,7 +33,7 @@ namespace ModThatIsNotMod.BoneMenu
 
 
         // Menu interaction objects
-        private static Hand menuHand { get { return Preferences.menuOnRightHand.value ? Player.rightHand : Player.leftHand; } }
+        private static Hand menuHand { get { return Preferences.menuOnRightHand ? Player.rightHand : Player.leftHand; } }
         private static Hand heldItemHand = null;
 
         private static GameObject menuInteractor;
@@ -113,6 +113,7 @@ namespace ModThatIsNotMod.BoneMenu
             GameObject.DontDestroyOnLoad(baseMenuButton);
 
             baseMenuCanvas.transform.Find("Scrollbar").gameObject.AddComponent<MenuScrollbar>();
+            baseMenuCanvas.GetComponent<Canvas>().sortingOrder = 99;
 
             SetupBaseButton(baseMenuButton);
             SetupBackButton(baseMenuCanvas.transform.Find("BackButton").gameObject);
@@ -123,7 +124,7 @@ namespace ModThatIsNotMod.BoneMenu
             MethodInfo bonesFilledHookMethod = typeof(MenuManager).GetMethod("OnBodyBlenderBonesFilled", AccessTools.all);
             Hooking.CreateHook(bodyBlenderFillBonesMethod, bonesFilledHookMethod);
 
-            menuOffset = new Vector3(Preferences.menuOffsetX.value, Preferences.menuOffsetY.value, Preferences.menuOffsetZ.value);
+            menuOffset = new Vector3(Preferences.menuOffsetX, Preferences.menuOffsetY, Preferences.menuOffsetZ);
 
             HeldItemMenuManager.InteractableHookingSetup();
         }
@@ -162,7 +163,7 @@ namespace ModThatIsNotMod.BoneMenu
 
         internal static void AddRadialMenuButton()
         {
-            if (!Preferences.boneMenuRadialButtonEnabled.value)
+            if (!Preferences.boneMenuRadialButtonEnabled)
                 return;
 
             GameObject rig = Player.GetRigManager();
@@ -229,7 +230,7 @@ namespace ModThatIsNotMod.BoneMenu
         internal static void OnUpdate()
         {
             // Gesture opening
-            if (menuHand != null && Preferences.boneMenuGestureEnabled.value)
+            if (menuHand != null && Preferences.boneMenuGestureEnabled)
             {
                 bool isMenuHandInOpenPose = IsHandInOpenMenuPose(menuHand);
                 bool isOtherHandInOpenPose = IsHandInOpenMenuPose(menuHand.otherHand);
@@ -263,8 +264,8 @@ namespace ModThatIsNotMod.BoneMenu
                 }
                 else
                 {
-                    rootFingerBone = Preferences.menuOnRightHand.value ? bones.lfIndex1 : bones.rtIndex1;
-                    endFingerBone = Preferences.menuOnRightHand.value ? rootFingerBone.transform.Find(leftFingertipPath) : rootFingerBone.transform.Find(rightFingertipPath);
+                    rootFingerBone = Preferences.menuOnRightHand ? bones.lfIndex1 : bones.rtIndex1;
+                    endFingerBone = Preferences.menuOnRightHand ? rootFingerBone.transform.Find(leftFingertipPath) : rootFingerBone.transform.Find(rightFingertipPath);
                 }
                 Vector3 posDiff = endFingerBone.position - prevFingertipPos;
                 menuInteractor.transform.position = endFingerBone.position + posDiff;

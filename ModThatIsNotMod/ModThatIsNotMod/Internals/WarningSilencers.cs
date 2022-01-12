@@ -12,7 +12,7 @@ namespace ModThatIsNotMod.Internals
         public static void SilenceWarningMessages()
         {
             MethodInfo logSupportMethod = typeof(LogSupport).GetMethod("Warning", AccessTools.all);
-            if (Preferences.silenceUnhollowerWarnings.value && logSupportMethod != null)
+            if (Preferences.silenceUnhollowerWarnings && logSupportMethod != null)
                 Hooking.CreateHook(logSupportMethod, typeof(WarningSilencers).GetMethod("UnhollowerWarningPrefix", AccessTools.all), true);
         }
         private static bool UnhollowerWarningPrefix(string __0) => !__0.Contains("unsupported return type") && !__0.Contains("unsupported parameter");

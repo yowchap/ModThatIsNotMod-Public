@@ -41,5 +41,7 @@ namespace ModThatIsNotMod
             value = MelonPreferences.GetEntryValue<T>(categoryId, id);
             return value;
         }
+
+        public static implicit operator T(ModPref<T> m) => m.value;
     }
 }

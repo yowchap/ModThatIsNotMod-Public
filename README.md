@@ -13,6 +13,7 @@ Feel free to make a PR for new features and bug fixes, just make sure the code i
 - Replace dummy shaders with the real ingame versions
 - Spawn items from pools
 - Check if mods are up to date
+- Send notifications to the player
 - Much more
 
 ### Custom Items
@@ -24,8 +25,10 @@ You can open and close BoneMenu either through the radial menu or a hand gesture
 
 <br>
 
-## MelonPreferences
+## User Preferences
 You will have to run the game once with the mod installed before the preferences will show up.
+
+Preferences are stored in `UserData/ModThatIsNotMod.cfg`.
 
 #### Mag eject prefs
 - MagEjectButtonEnabled: Whether or not the menu button should be used to eject mags from guns.
@@ -38,6 +41,10 @@ You will have to run the game once with the mod installed before the preferences
 - BoneMenuRadialButtonEnabled: Lets you open BoneMenu from the radial menu.
 - MenuOnRightHand: Enable this if you want the menu to follow your right hand instead of your left.
 - MenuOffsetX, MenuOffsetY, and MenuOffsetZ: Allows you to change the position of the menu relative to your hand.
+
+#### Notification prefs
+- NotificationsOnRightHand: Enable this if you want notifications to follow your right hand instead of your left.
+- NotificationOffsetX, NotificationOffsetY, and NotificationOffsetZ: Changes the position of the notifications relative to your hand.
 
 #### Misc prefs
 - AutomaticSpawnGuns: Will make the utility gun fully automatic.
@@ -66,11 +73,16 @@ L4rs - Added a color element to BoneMenu and made a way for a menu to be attache
 
 Trev - Modified the CustomMonobehaviourHandler to support custom json serializers
 
-And thanks to anyone who told me about bugs or suggested new features for the mod!
+And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 
 <br>
 
 ## Changelogs
+
+#### v0.2.7:
+- Added a notification system
+- Moved preferences from `UserData/MelonPreferences.cfg` to `UserData/ModThatIsNotMod.cfg` (your existing preferences will be moved automatically)
+- Lots of code cleanup
 
 #### v0.2.6:
 - Updated to use MelonLoader v0.5.2
@@ -145,4 +157,3 @@ And thanks to anyone who told me about bugs or suggested new features for the mo
 
 #### v0.1.0:
 - Initial beta release
-  </details>

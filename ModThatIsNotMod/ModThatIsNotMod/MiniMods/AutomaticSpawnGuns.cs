@@ -8,7 +8,7 @@ namespace ModThatIsNotMod.MiniMods
     {
         public static void Setup()
         {
-            if (Preferences.automaticSpawnGuns.value)
+            if (Preferences.automaticSpawnGuns)
                 Hooking.CreateHook(typeof(SpawnGun).GetMethod("OnFire", AccessTools.all), typeof(AutomaticSpawnGuns).GetMethod("OnSpawnGunFire", AccessTools.all), true);
         }
 

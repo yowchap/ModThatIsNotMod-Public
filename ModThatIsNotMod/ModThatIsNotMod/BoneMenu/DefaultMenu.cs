@@ -20,6 +20,7 @@ namespace ModThatIsNotMod.BoneMenu
         private static MenuCategory ammoMenuCategory;
         private static MenuCategory prefsCategory;
         private static MenuCategory menuOffsetCategory;
+        private static MenuCategory notificationOffsetCategory;
 
 
         /// <summary>
@@ -33,6 +34,7 @@ namespace ModThatIsNotMod.BoneMenu
             ammoMenuCategory = rootCategory.CreateSubCategory("Ammo Menu", Color.grey);
             prefsCategory = rootCategory.CreateSubCategory("Preferences", Color.grey);
             menuOffsetCategory = prefsCategory.CreateSubCategory("Menu Offset", Color.grey);
+            notificationOffsetCategory = prefsCategory.CreateSubCategory("Notification Offset", Color.grey);
 
             // Item spawning
             itemSpawningCategory.CreateFunctionElement("Spawn Utility Gun", Color.white, new Action(() => RadialMenuEverywhere.SpawnUtilGun(1.5f)));
@@ -45,16 +47,22 @@ namespace ModThatIsNotMod.BoneMenu
             ammoMenuCategory.CreateFunctionElement("Add Ammo", Color.white, AddAmmo);
 
             // Preferences
-            prefsCategory.CreateBoolElement("Mag Eject Button", Color.white, Preferences.enableMagEjectButton.value, new Action<bool>((value) => Preferences.enableMagEjectButton.SetValue(value)));
-            prefsCategory.CreateIntElement("Presses To Eject", Color.white, Preferences.pressesToEjectMag.value, new Action<int>((value) => Preferences.pressesToEjectMag.SetValue(value)), minValue: 1, invokeOnValueChanged: true);
-            prefsCategory.CreateBoolElement("Auto Eject Mags", Color.white, Preferences.autoEjectEmptyMags.value, new Action<bool>((value) => Preferences.autoEjectEmptyMags.SetValue(value)));
-            prefsCategory.CreateBoolElement("Override Mag Eject Settings", Color.white, Preferences.overrideMagEjectSettings.value, new Action<bool>((value) => Preferences.overrideMagEjectSettings.SetValue(value)));
-            prefsCategory.CreateBoolElement("Reload Items On Level Change", Color.white, Preferences.reloadItemsOnLevelChange.value, new Action<bool>((value) => Preferences.reloadItemsOnLevelChange.SetValue(value)));
+            prefsCategory.CreateBoolElement("Mag Eject Button", Color.white, Preferences.enableMagEjectButton, new Action<bool>((value) => Preferences.enableMagEjectButton.SetValue(value)));
+            prefsCategory.CreateIntElement("Presses To Eject", Color.white, Preferences.pressesToEjectMag, new Action<int>((value) => Preferences.pressesToEjectMag.SetValue(value)), minValue: 1, invokeOnValueChanged: true);
+            prefsCategory.CreateBoolElement("Auto Eject Mags", Color.white, Preferences.autoEjectEmptyMags, new Action<bool>((value) => Preferences.autoEjectEmptyMags.SetValue(value)));
+            prefsCategory.CreateBoolElement("Override Mag Eject Settings", Color.white, Preferences.overrideMagEjectSettings, new Action<bool>((value) => Preferences.overrideMagEjectSettings.SetValue(value)));
+            prefsCategory.CreateBoolElement("Reload Items On Level Change", Color.white, Preferences.reloadItemsOnLevelChange, new Action<bool>((value) => Preferences.reloadItemsOnLevelChange.SetValue(value)));
+            prefsCategory.CreateBoolElement("Notifications On Right Hand", Color.white, Preferences.notificationsOnRightHand, new Action<bool>((value) => Preferences.notificationsOnRightHand.SetValue(value)));
 
             // Menu offset
-            menuOffsetCategory.CreateFloatElement("X Offset", Color.white, Preferences.menuOffsetX.value, new Action<float>((value) => { Preferences.menuOffsetX.SetValue(value); MenuManager.menuOffset.x = value; }), 0.05f);
-            menuOffsetCategory.CreateFloatElement("Y Offset", Color.white, Preferences.menuOffsetY.value, new Action<float>((value) => { Preferences.menuOffsetY.SetValue(value); MenuManager.menuOffset.y = value; }), 0.05f);
-            menuOffsetCategory.CreateFloatElement("Z Offset", Color.white, Preferences.menuOffsetZ.value, new Action<float>((value) => { Preferences.menuOffsetZ.SetValue(value); MenuManager.menuOffset.z = value; }), 0.05f);
+            menuOffsetCategory.CreateFloatElement("X Offset", Color.white, Preferences.menuOffsetX, new Action<float>((value) => { Preferences.menuOffsetX.SetValue(value); MenuManager.menuOffset.x = value; }), 0.05f);
+            menuOffsetCategory.CreateFloatElement("Y Offset", Color.white, Preferences.menuOffsetY, new Action<float>((value) => { Preferences.menuOffsetY.SetValue(value); MenuManager.menuOffset.y = value; }), 0.05f);
+            menuOffsetCategory.CreateFloatElement("Z Offset", Color.white, Preferences.menuOffsetZ, new Action<float>((value) => { Preferences.menuOffsetZ.SetValue(value); MenuManager.menuOffset.z = value; }), 0.05f);
+
+            // Notification offset
+            notificationOffsetCategory.CreateFloatElement("X Offset", Color.white, Preferences.notificationOffsetX, new Action<float>((value) => { Preferences.notificationOffsetX.SetValue(value); Notifications.positionOffset.x = value; }), 0.025f);
+            notificationOffsetCategory.CreateFloatElement("Y Offset", Color.white, Preferences.notificationOffsetY, new Action<float>((value) => { Preferences.notificationOffsetY.SetValue(value); Notifications.positionOffset.y = value; }), 0.025f);
+            notificationOffsetCategory.CreateFloatElement("Z Offset", Color.white, Preferences.notificationOffsetZ, new Action<float>((value) => { Preferences.notificationOffsetZ.SetValue(value); Notifications.positionOffset.z = value; }), 0.025f);
         }
 
         /// <summary>

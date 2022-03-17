@@ -159,6 +159,7 @@
     <Compile Include="MonoBehaviours\SimpleGunModifiers.cs" />
     <Compile Include="MonoBehaviours\InstantiateOnFire.cs" />
     <Compile Include="Notifications.cs" />
+    <Compile Include="Nullables\BoxedNullable.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Internals\Preferences.cs" />
     <Compile Include="Pooling\SimplePool.cs" />

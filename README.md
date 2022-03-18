@@ -14,6 +14,7 @@ Feel free to make a PR for new features and bug fixes, just make sure the code i
 - Spawn items from pools
 - Check if mods are up to date
 - Send notifications to the player
+- Access methods with Nullable<T> arguments that are normally broken
 - Much more
 
 ### Custom Items
@@ -72,6 +73,8 @@ Chromium - Helped me create Boneworks Modding Toolkit and Custom Items Framework
 L4rs - Added a color element to BoneMenu and made a way for a menu to be attached to an item
 
 Trev - Modified the CustomMonobehaviourHandler to support custom json serializers
+  
+WNP78 - Added `BoxedNullable` and `NullableMethodExtensions`
 
 And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 

@@ -28,8 +28,8 @@
 
         public unsafe bool HasValue
         {
-            get => (*(byte*)(ValuePtr + hasValueOffset)) != 0;
-            set => (*(byte*)(ValuePtr + hasValueOffset)) = (value ? (byte)1 : (byte)0);
+            get => (*(byte*)(Pointer + hasValueOffset)) != 0;
+            set => (*(byte*)(Pointer + hasValueOffset)) = (value ? (byte)1 : (byte)0);
         }
 
         public unsafe T Value
@@ -59,8 +59,10 @@
                 {
                     *(byte*)ValuePtr = *((byte*)&value);
                 }
-
-                throw new InvalidOperationException("Interop done goof?");
+                else
+                {
+                    throw new InvalidOperationException("Interop done goof?");
+                }
             }
         }
 

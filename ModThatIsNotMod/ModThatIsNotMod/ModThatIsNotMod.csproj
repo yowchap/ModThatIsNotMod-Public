@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Debug\ModThatIsNotMod.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Release\ModThatIsNotMod.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -157,6 +159,8 @@
     <Compile Include="MonoBehaviours\SimpleGunModifiers.cs" />
     <Compile Include="MonoBehaviours\InstantiateOnFire.cs" />
     <Compile Include="Notifications.cs" />
+    <Compile Include="Nullables\BoxedNullable.cs" />
+    <Compile Include="Nullables\NullableMethodExtensions.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Internals\Preferences.cs" />
     <Compile Include="Pooling\SimplePool.cs" />

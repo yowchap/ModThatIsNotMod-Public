@@ -82,6 +82,9 @@ And thanks to anyone who tested, told me about bugs, or suggested new features f
 
 ## Changelogs
 
+#### v0.2.8:
+- Added `BoxedNullable` and `NullableMethodExtensions` so mods can use nullables without issues (Thanks to @WNP78#2849)
+
 #### v0.2.7:
 - Added a notification system
 - Moved preferences from `UserData/MelonPreferences.cfg` to `UserData/ModThatIsNotMod.cfg` (your existing preferences will be moved automatically)

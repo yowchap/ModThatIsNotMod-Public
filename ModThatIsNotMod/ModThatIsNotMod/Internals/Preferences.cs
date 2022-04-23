@@ -9,7 +9,10 @@ namespace ModThatIsNotMod.Internals
     {
         private static readonly string category = "ModThatIsNotMod";
         private static readonly string debugCategory = "ModThatIsNotModDebug";
-        private static readonly string filePath = "UserData/ModThatIsNotMod.cfg";
+
+        //Rtas: Setting filePath to a directory branching off of the executable location causes issues with mod managers like r2modman
+        //      MelonUtils' directory locations should be used where possible to account for this
+        private static readonly string filePath = MelonUtils.UserDataDirectory + @"\ModThatIsNotMod.cfg";
 
 
         public static ModPref<LoggingMode> loggingMode = new ModPref<LoggingMode>(debugCategory, "LoggingMode", LoggingMode.NORMAL);

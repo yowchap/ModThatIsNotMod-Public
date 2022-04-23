@@ -76,11 +76,16 @@ Trev - Modified the CustomMonobehaviourHandler to support custom json serializer
   
 WNP78 - Added `BoxedNullable` and `NullableMethodExtensions`
 
+Rtas - Fixed preferences with mod managers
+
 And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 
 <br>
 
 ## Changelogs
+
+#### v0.2.9:
+- Fixed preferences with mod managers (Thanks to Rtas)
 
 #### v0.2.8:
 - Added `BoxedNullable` and `NullableMethodExtensions` so mods can use nullables without issues (Thanks to @WNP78#2849)

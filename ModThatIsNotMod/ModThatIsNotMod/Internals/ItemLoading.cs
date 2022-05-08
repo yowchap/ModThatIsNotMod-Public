@@ -98,6 +98,9 @@ namespace ModThatIsNotMod.Internals
             else if (!isReload) { ModConsole.Msg(ConsoleColor.DarkYellow, $"No .melon files found in {Path.Combine(MelonUtils.UserDataDirectory, customItemsDir)}", LoggingMode.MINIMAL); }
             else { ModConsole.Msg(ConsoleColor.DarkYellow, "No modified .melon files detected", LoggingMode.MINIMAL); }
 
+            if (!isReload)
+                Stats.ReportItemStats(loadedMelons.Count);
+
             hasLoadedEmbeddedAssemblies = true;
         }
 

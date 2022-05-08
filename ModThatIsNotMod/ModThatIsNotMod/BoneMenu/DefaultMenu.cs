@@ -53,6 +53,7 @@ namespace ModThatIsNotMod.BoneMenu
             prefsCategory.CreateBoolElement("Override Mag Eject Settings", Color.white, Preferences.overrideMagEjectSettings, new Action<bool>((value) => Preferences.overrideMagEjectSettings.SetValue(value)));
             prefsCategory.CreateBoolElement("Reload Items On Level Change", Color.white, Preferences.reloadItemsOnLevelChange, new Action<bool>((value) => Preferences.reloadItemsOnLevelChange.SetValue(value)));
             prefsCategory.CreateBoolElement("Notifications On Right Hand", Color.white, Preferences.notificationsOnRightHand, new Action<bool>((value) => Preferences.notificationsOnRightHand.SetValue(value)));
+            prefsCategory.CreateBoolElement("Disable Stats", Color.white, Preferences.disableReportingStats, new Action<bool>((value) => Preferences.disableReportingStats.SetValue(value)));
 
             // Menu offset
             menuOffsetCategory.CreateFloatElement("X Offset", Color.white, Preferences.menuOffsetX, new Action<float>((value) => { Preferences.menuOffsetX.SetValue(value); MenuManager.menuOffset.x = value; }), 0.05f);

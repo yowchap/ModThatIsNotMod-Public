@@ -130,6 +130,7 @@
     <Compile Include="Internals\MelonHashChecking.cs" />
     <Compile Include="Internals\ShellLoadingController.cs" />
     <Compile Include="Internals\GunSlideFixes.cs" />
+    <Compile Include="Internals\Stats.cs" />
     <Compile Include="Internals\WarningSilencers.cs" />
     <Compile Include="Legacy\EasyMenu.cs" />
     <Compile Include="MiniMods\AutomaticSpawnGuns.cs" />

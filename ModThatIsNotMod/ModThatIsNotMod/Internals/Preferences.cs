@@ -10,9 +10,9 @@ namespace ModThatIsNotMod.Internals
         private static readonly string category = "ModThatIsNotMod";
         private static readonly string debugCategory = "ModThatIsNotModDebug";
 
-        //Rtas: Setting filePath to a directory branching off of the executable location causes issues with mod managers like r2modman
-        //      MelonUtils' directory locations should be used where possible to account for this
         private static readonly string filePath = MelonUtils.UserDataDirectory + @"\ModThatIsNotMod.cfg";
+
+        public static bool isFirstLoad { get; private set; } = false;
 
 
         public static ModPref<LoggingMode> loggingMode = new ModPref<LoggingMode>(debugCategory, "LoggingMode", LoggingMode.NORMAL);
@@ -46,6 +46,8 @@ namespace ModThatIsNotMod.Internals
         public static ModPref<bool> utilGunInRadialMenu = new ModPref<bool>(category, "UtilGunInRadialMenu", true);
         public static ModPref<string[]> infiniteAmmoGuns = new ModPref<string[]>(category, "InfiniteAmmoGuns", new string[] { "Gun names here", "CaSe SeNsItIvE" });
 
+        public static ModPref<bool> disableReportingStats = new ModPref<bool>(category, "DisableStats", false);
+
         // Meme prefs
         public static ModPref<bool> tabloidMode = new ModPref<bool>(category, "TabloidMode", false);
         public static ModPref<bool> autoSpawnAds = new ModPref<bool>(category, "HappyFunTime", false);
@@ -72,6 +74,8 @@ namespace ModThatIsNotMod.Internals
                 defaultCategoryObj.SetFilePath(filePath);
                 debugCategoryObj.SetFilePath(filePath);
                 MelonPreferences.Save();
+
+                isFirstLoad = true;
 
                 ModConsole.Msg(ConsoleColor.Green, "Your preferences for ModThatIsNotMod have been moved from MelonPreferences.cfg to ModThatIsNotMod.cfg for organizational purposes.", LoggingMode.MINIMAL);
                 Notifications.SendNotification("Your preferences for ModThatIsNotMod have been moved from\nMelonPreferences.cfg\nto\nModThatIsNotMod.cfg\nfor organizational purposes.", 15);
@@ -109,6 +113,8 @@ namespace ModThatIsNotMod.Internals
             automaticSpawnGuns.CreateEntry();
             utilGunInRadialMenu.CreateEntry();
             infiniteAmmoGuns.CreateEntry();
+
+            disableReportingStats.CreateEntry(true);
 
             // Meme prefs
             tabloidMode.CreateEntry(true);
@@ -149,6 +155,10 @@ namespace ModThatIsNotMod.Internals
             automaticSpawnGuns.ReadValue();
             utilGunInRadialMenu.ReadValue();
             infiniteAmmoGuns.ReadValue();
+
+            disableReportingStats.ReadValue();
+            if (disableReportingStats)
+                ModConsole.Msg(ConsoleColor.Yellow, "Stats have been disabled", LoggingMode.MINIMAL);
 
             // Random prefs
             tabloidMode.ReadValue();

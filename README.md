@@ -24,6 +24,9 @@ Place `.melon` files into `UserData/CustomItems` and they will be loaded automat
 This is a custom menu that can be used by other mods. It has some basic default functionality for giving yourself ammo and spawning random custom items.
 You can open and close BoneMenu either through the radial menu or a hand gesture. Using the radial menu is the default option for new installs, but I personally find the gesture nicer to use once you're used to it.
 
+### Disabling Stats
+The info collected is very basic and fully anonymous (you can check `Stats.cs`), but if you still want to disable it, just add `DisableStats = true` to the preferences file under the `[ModThatIsNotMod]` heading or do it through bonemenu.
+
 <br>
 
 ## User Preferences
@@ -78,11 +81,16 @@ WNP78 - Added `BoxedNullable` and `NullableMethodExtensions`
 
 Rtas - Fixed preferences with mod managers
 
+Extraes - Hosting the mod stats server and helping me get that stuff working
+
 And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 
 <br>
 
 ## Changelogs
+
+#### v0.3.0:
+- Added optional stat collecting
 
 #### v0.2.9:
 - Fixed preferences with mod managers (Thanks to Rtas)

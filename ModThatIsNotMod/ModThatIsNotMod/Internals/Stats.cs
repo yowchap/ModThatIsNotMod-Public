@@ -28,6 +28,9 @@ namespace ModThatIsNotMod.Internals
             string playerPrefsMiscKey = "MTINM_ReportedMiscStats";
             if (!PlayerPrefs.HasKey(playerPrefsVersionKey))
             {
+                try { client.GetAsync("https://stats.extraes.xyz/register?mod=" + modName + "&key=" + BuildInfo.Version + "&value=0"); }
+                catch { ModConsole.Msg("Failed to register version " + BuildInfo.Version, LoggingMode.DEBUG); }
+
                 try
                 {
                     client.GetAsync(versionUrl);
@@ -36,6 +39,8 @@ namespace ModThatIsNotMod.Internals
                 catch { ModConsole.Msg("Failed to report version stat", LoggingMode.DEBUG); }
             }
 
+            try { client.GetAsync("https://stats.extraes.xyz/register?mod=" + modName + "&key=" + BuildInfo.Version + "_not_unique" + "&value=0"); }
+            catch { ModConsole.Msg("Failed to register non-unique version " + BuildInfo.Version, LoggingMode.DEBUG); }
             try { client.GetAsync(versionUrl + "_not_unique"); }
             catch { ModConsole.Msg("Failed to report non-unique version stat", LoggingMode.DEBUG); }
 
@@ -103,6 +108,9 @@ namespace ModThatIsNotMod.Internals
 
         public static void SetupCustomMapsHook()
         {
+            if (Preferences.disableReportingStats)
+                return;
+
             // Tabloid wanted this so here it is
             foreach (MelonMod mod in MelonHandler.Mods)
             {
@@ -147,8 +155,8 @@ namespace ModThatIsNotMod.Internals
 
             try
             {
-                client.GetAsync("https://stats.extraes.xyz/increment?mod=custom_map_stats&key=" + mapName);
                 client.GetAsync("https://stats.extraes.xyz/increment?mod=custom_map_stats&key=total_loads");
+                client.GetAsync("https://stats.extraes.xyz/increment?mod=custom_map_stats&key=" + mapName);
             }
             catch { ModConsole.Msg("Failed to update map stats for " + mapName, LoggingMode.DEBUG); }
         }

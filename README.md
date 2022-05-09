@@ -89,6 +89,10 @@ And thanks to anyone who tested, told me about bugs, or suggested new features f
 
 ## Changelogs
 
+#### v0.3.1:
+- Fixed an issue with custom map stats
+- Improved version reporting
+
 #### v0.3.0:
 - Added optional stat collecting
 

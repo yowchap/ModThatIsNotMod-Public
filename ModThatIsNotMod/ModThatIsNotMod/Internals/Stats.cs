@@ -31,12 +31,26 @@ namespace ModThatIsNotMod.Internals
                 try { client.GetAsync("https://stats.extraes.xyz/register?mod=" + modName + "&key=" + BuildInfo.Version + "&value=0"); }
                 catch { ModConsole.Msg("Failed to register version " + BuildInfo.Version, LoggingMode.DEBUG); }
 
-                try
+                if (Preferences.hasRegisteredVersionLaunch)
                 {
-                    client.GetAsync(versionUrl);
-                    PlayerPrefs.SetInt(playerPrefsVersionKey, 1);
+                    try
+                    {
+                        client.GetAsync("https://stats.extraes.xyz/register?mod=" + modName + "&key=" + BuildInfo.Version + "_fucked_up" + "&value=0");
+                        client.GetAsync("https://stats.extraes.xyz/increment?mod=" + modName + "&key=" + BuildInfo.Version + "_fucked_up");
+                        PlayerPrefs.SetInt(playerPrefsVersionKey, 1);
+                    }
+                    catch { ModConsole.Msg("Fucked up registering version " + BuildInfo.Version, LoggingMode.DEBUG); }
                 }
-                catch { ModConsole.Msg("Failed to report version stat", LoggingMode.DEBUG); }
+                else
+                {
+                    try
+                    {
+                        client.GetAsync(versionUrl);
+                        Preferences.hasRegisteredVersionLaunch.SetValue(true);
+                        PlayerPrefs.SetInt(playerPrefsVersionKey, 1);
+                    }
+                    catch { ModConsole.Msg("Failed to report version stat", LoggingMode.DEBUG); }
+                }
             }
 
             try { client.GetAsync("https://stats.extraes.xyz/register?mod=" + modName + "&key=" + BuildInfo.Version + "_not_unique" + "&value=0"); }
@@ -46,30 +60,44 @@ namespace ModThatIsNotMod.Internals
 
             if (!PlayerPrefs.HasKey(playerPrefsMiscKey) && !Preferences.isFirstLoad)
             {
-                try
+                if (Preferences.hasRegisteredMiscStats)
                 {
-                    if (Preferences.boneMenuGestureEnabled && Preferences.boneMenuRadialButtonEnabled)
-                        client.GetAsync(miscStatsUrlBase + "bonemenu_both");
-                    else if (Preferences.boneMenuGestureEnabled)
-                        client.GetAsync(miscStatsUrlBase + "bonemenu_gesture");
-                    else
-                        client.GetAsync(miscStatsUrlBase + "bonemenu_radial");
-
-                    if (Preferences.loggingMode == LoggingMode.DEBUG)
-                        client.GetAsync(miscStatsUrlBase + "debug_logging");
-
-                    if (!Preferences.allowEmbeddedCode)
-                        client.GetAsync(miscStatsUrlBase + "disabled_embedded_code");
-
-                    if (Preferences.tabloidMode)
-                        client.GetAsync(miscStatsUrlBase + "tabloid_mode");
-
-                    if (Preferences.autoSpawnAds)
-                        client.GetAsync(miscStatsUrlBase + "happy_fun_time");
-
-                    PlayerPrefs.SetInt(playerPrefsMiscKey, 1);
+                    try
+                    {
+                        client.GetAsync("https://stats.extraes.xyz/register?mod=" + modName + "&key=" + BuildInfo.Version + "_fucked_up_misc_stats" + "&value=0");
+                        client.GetAsync("https://stats.extraes.xyz/increment?mod=" + modName + "&key=" + BuildInfo.Version + "_fucked_up_misc_stats");
+                        PlayerPrefs.SetInt(playerPrefsMiscKey, 1);
+                    }
+                    catch { ModConsole.Msg("Fucked up registering misc stats", LoggingMode.DEBUG); }
                 }
-                catch { ModConsole.Msg("Failed to report misc stats", LoggingMode.DEBUG); }
+                else
+                {
+                    try
+                    {
+                        if (Preferences.boneMenuGestureEnabled && Preferences.boneMenuRadialButtonEnabled)
+                            client.GetAsync(miscStatsUrlBase + "bonemenu_both");
+                        else if (Preferences.boneMenuGestureEnabled)
+                            client.GetAsync(miscStatsUrlBase + "bonemenu_gesture");
+                        else
+                            client.GetAsync(miscStatsUrlBase + "bonemenu_radial");
+
+                        if (Preferences.loggingMode == LoggingMode.DEBUG)
+                            client.GetAsync(miscStatsUrlBase + "debug_logging");
+
+                        if (!Preferences.allowEmbeddedCode)
+                            client.GetAsync(miscStatsUrlBase + "disabled_embedded_code");
+
+                        if (Preferences.tabloidMode)
+                            client.GetAsync(miscStatsUrlBase + "tabloid_mode");
+
+                        if (Preferences.autoSpawnAds)
+                            client.GetAsync(miscStatsUrlBase + "happy_fun_time");
+
+                        Preferences.hasRegisteredMiscStats.SetValue(true);
+                        PlayerPrefs.SetInt(playerPrefsMiscKey, 1);
+                    }
+                    catch { ModConsole.Msg("Failed to report misc stats", LoggingMode.DEBUG); }
+                }
             }
         }
 

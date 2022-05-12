@@ -89,6 +89,9 @@ And thanks to anyone who tested, told me about bugs, or suggested new features f
 
 ## Changelogs
 
+#### v0.3.2:
+- Prevented some stats from being reported multiple times
+
 #### v0.3.1:
 - Fixed an issue with custom map stats
 - Improved version reporting

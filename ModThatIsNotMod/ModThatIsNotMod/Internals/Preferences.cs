@@ -9,6 +9,7 @@ namespace ModThatIsNotMod.Internals
     {
         private static readonly string category = "ModThatIsNotMod";
         private static readonly string debugCategory = "ModThatIsNotModDebug";
+        private static readonly string statsCategory = "ModThatIsNotModStats";
 
         private static readonly string filePath = MelonUtils.UserDataDirectory + @"\ModThatIsNotMod.cfg";
 
@@ -22,6 +23,9 @@ namespace ModThatIsNotMod.Internals
         public static ModPref<bool> exportEmbeddedAssemblies = new ModPref<bool>(debugCategory, "ExportEmbeddedAssemblies", true);
         public static ModPref<bool> silenceUnhollowerWarnings = new ModPref<bool>(debugCategory, "SilenceUnhollowerWarnings", true);
         public static ModPref<bool> reloadItemsOnLevelChange = new ModPref<bool>(debugCategory, "ReloadItemsOnLevelChange", false);
+
+        public static ModPref<bool> hasRegisteredVersionLaunch = new ModPref<bool>(statsCategory, BuildInfo.Version.Replace('.', '_') + "_RegisteredVersion", false);
+        public static ModPref<bool> hasRegisteredMiscStats = new ModPref<bool>(statsCategory, BuildInfo.Version.Replace('.', '_') + "_RegisteredMiscStats", false);
 
         // Regular prefs
         public static ModPref<bool> enableMagEjectButton = new ModPref<bool>(category, "MagEjectButtonEnabled", true);
@@ -58,11 +62,13 @@ namespace ModThatIsNotMod.Internals
         {
             MelonPreferences_Category defaultCategoryObj = MelonPreferences.CreateCategory(category);
             MelonPreferences_Category debugCategoryObj = MelonPreferences.CreateCategory(debugCategory);
+            MelonPreferences_Category statsCategoryObj = MelonPreferences.CreateCategory(statsCategory);
 
             if (File.Exists(filePath))
             {
                 defaultCategoryObj.SetFilePath(filePath);
                 debugCategoryObj.SetFilePath(filePath);
+                statsCategoryObj.SetFilePath(filePath);
                 CreatePrefs();
                 LoadPrefs();
                 MelonPreferences.Save();
@@ -90,6 +96,9 @@ namespace ModThatIsNotMod.Internals
             exportEmbeddedAssemblies.CreateEntry();
             silenceUnhollowerWarnings.CreateEntry();
             reloadItemsOnLevelChange.CreateEntry();
+
+            hasRegisteredVersionLaunch.CreateEntry(true);
+            hasRegisteredMiscStats.CreateEntry(true);
 
             // Regular prefs
             enableMagEjectButton.CreateEntry();
@@ -132,6 +141,9 @@ namespace ModThatIsNotMod.Internals
             exportEmbeddedAssemblies.ReadValue();
             silenceUnhollowerWarnings.ReadValue();
             reloadItemsOnLevelChange.ReadValue();
+
+            hasRegisteredVersionLaunch.ReadValue();
+            hasRegisteredMiscStats.ReadValue();
 
             // Normal prefs
             enableMagEjectButton.ReadValue();

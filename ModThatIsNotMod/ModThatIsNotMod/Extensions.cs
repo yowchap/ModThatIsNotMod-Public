@@ -1,4 +1,6 @@
 ﻿using StressLevelZero.Props.Weapons;
+using StressLevelZero.AI;
+using PuppetMasta;
 
 namespace ModThatIsNotMod
 {
@@ -25,5 +27,20 @@ namespace ModThatIsNotMod
             gun.roundsPerSecond = rpm / 60f;
             gun.fireDuration = 60f / rpm;
         }
+
+        public static void DealDamage(this AIBrain brain, float damage)
+        {
+            var health = brain?.behaviour?.health;
+            if (health != null)
+            {
+                health.TakeDamage(1, new StressLevelZero.Combat.Attack()
+                {
+                    damage = damage
+                });
+            } 
+        }
+
+        
+
     }
 }

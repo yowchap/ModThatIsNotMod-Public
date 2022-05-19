@@ -83,11 +83,16 @@ Rtas - Fixed preferences with mod managers
 
 Extraes - Hosting the mod stats server and helping me get that stuff working
 
+Adidasaurus - Added an extension method to easily damage enemies
+
 And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 
 <br>
 
 ## Changelogs
+
+#### v0.3.3:
+- Added an extension method to easily damage enemies (Thanks to Adidasaurus#7786)
 
 #### v0.3.2:
 - Prevented some stats from being reported multiple times

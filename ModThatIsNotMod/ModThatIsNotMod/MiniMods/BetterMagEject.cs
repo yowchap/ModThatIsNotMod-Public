@@ -37,7 +37,7 @@ namespace ModThatIsNotMod.MiniMods
 
         public static void OnUpdate()
         {
-            if (Player.handsExist && Player.controllersExist)
+            if (Player.handsExist && Player.baseControllersExist)
             {
                 if (Preferences.enableMagEjectButton)
                     UpdateInputValues();
@@ -91,21 +91,22 @@ namespace ModThatIsNotMod.MiniMods
                 rightPresses = 0;
 
             //Check which buttons are down
-            if (Player.leftController.GetMenuButtonDown() && !Player.leftController.GetSecondaryMenuButtonDown())
+            if (Player.leftBaseController.GetMenuButtonDown() && !Player.leftBaseController.GetSecondaryMenuButtonDown())
             {
                 leftBResetTime = Time.time + timeToResetPresses;
                 leftBReleaseTime = Time.time + timeToReleaseButton;
             }
-            if (Player.rightController.GetMenuButtonDown() && !Player.rightController.GetSecondaryMenuButtonDown())
+            if (Player.rightBaseController.GetMenuButtonDown() && !Player.rightBaseController.GetSecondaryMenuButtonDown())
             {
                 rightBResetTime = Time.time + timeToResetPresses;
                 rightBReleaseTime = Time.time + timeToReleaseButton;
             }
 
             //Check which buttons were released
-            if (Player.leftController.GetMenuButtonUp() && !Player.leftController.GetSecondaryMenuButtonUp() && Time.time <= leftBReleaseTime)
+
+            if (Player.leftBaseController.GetMenuButtonUp() && !Player.leftBaseController.GetSecondaryMenuButtonUp() && Time.time <= leftBReleaseTime)
                 leftPresses++;
-            if (Player.rightController.GetMenuButtonUp() && !Player.rightController.GetSecondaryMenuButtonUp() && Time.time <= rightBReleaseTime)
+            if (Player.rightBaseController.GetMenuButtonUp() && !Player.rightBaseController.GetSecondaryMenuButtonUp() && Time.time <= rightBReleaseTime)
                 rightPresses++;
         }
 

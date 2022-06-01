@@ -19,9 +19,15 @@ namespace ModThatIsNotMod
 
         public static Controller leftController { get; private set; }
         public static Controller rightController { get; private set; }
+
+        public static BaseController leftBaseController { get; private set; }
+        public static BaseController rightBaseController { get; private set; }
+
         public static bool controllersExist => leftController != null && rightController != null;
+        public static bool baseControllersExist => leftBaseController != null && rightBaseController != null;
 
         private static ControllerRig controllerRig;
+
 
 
         /// <summary>
@@ -43,11 +49,26 @@ namespace ModThatIsNotMod
             foreach (Controller controller in controllers)
             {
                 if (controller.name.ToLower().Contains("left"))
+                {
                     leftController = controller;
+                    leftBaseController = controller;
+                }
+
                 else if (controller.name.ToLower().Contains("right"))
+                {
                     rightController = controller;
+                    rightBaseController = controller;
+                }
             }
 
+            OculusController[] oculus = GameObject.FindObjectsOfType<OculusController>();
+            foreach (OculusController controller in oculus)
+            {
+                if (controller.name.ToLower().Contains("left"))
+                    leftBaseController = controller;
+                else if (controller.name.ToLower().Contains("right"))
+                    rightBaseController = controller;
+            }
             controllerRig = GameObject.FindObjectOfType<ControllerRig>();
         }
 

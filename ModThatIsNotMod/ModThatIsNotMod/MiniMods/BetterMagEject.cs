@@ -103,7 +103,6 @@ namespace ModThatIsNotMod.MiniMods
             }
 
             //Check which buttons were released
-
             if (Player.leftBaseController.GetMenuButtonUp() && !Player.leftBaseController.GetSecondaryMenuButtonUp() && Time.time <= leftBReleaseTime)
                 leftPresses++;
             if (Player.rightBaseController.GetMenuButtonUp() && !Player.rightBaseController.GetSecondaryMenuButtonUp() && Time.time <= rightBReleaseTime)

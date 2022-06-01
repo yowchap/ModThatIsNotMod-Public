@@ -1,6 +1,5 @@
-﻿using StressLevelZero.Props.Weapons;
-using StressLevelZero.AI;
-using PuppetMasta;
+﻿using StressLevelZero.AI;
+using StressLevelZero.Props.Weapons;
 
 namespace ModThatIsNotMod
 {
@@ -37,7 +36,7 @@ namespace ModThatIsNotMod
                 {
                     damage = damage
                 });
-            } 
+            }
         }
     }
 }

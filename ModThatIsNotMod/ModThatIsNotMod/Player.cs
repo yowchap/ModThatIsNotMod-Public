@@ -61,8 +61,8 @@ namespace ModThatIsNotMod
                 }
             }
 
-            OculusController[] oculus = GameObject.FindObjectsOfType<OculusController>();
-            foreach (OculusController controller in oculus)
+            OculusController[] oculusControllers = GameObject.FindObjectsOfType<OculusController>();
+            foreach (OculusController controller in oculusControllers)
             {
                 if (controller.name.ToLower().Contains("left"))
                     leftBaseController = controller;

@@ -52,7 +52,7 @@ namespace ModThatIsNotMod.Internals
                 // Try to load the .melon file
                 LoadedMelonData loadedMelonData = new LoadedMelonData();
                 try { loadedMelonData = LoadMelon(localPath); }
-                catch { failedMelons.Add(new LoadedMelonData() { filePath = file, errorMessage = "Exception thrown" }); continue; }
+                catch(Exception ex) { failedMelons.Add(new LoadedMelonData() { filePath = file, errorMessage = "Exception thrown", exceptionThrown = ex.ToString() }); continue; }
 
                 if (loadedMelonData.itemsLoaded > 0)
                 {
@@ -85,7 +85,12 @@ namespace ModThatIsNotMod.Internals
 
             // Log failed .melons
             foreach (LoadedMelonData data in failedMelons)
+            {
                 ModConsole.Msg(ConsoleColor.Red, $"Failed to load {data.filePath}: {data.errorMessage}", LoggingMode.MINIMAL);
+                if(data.exceptionThrown != "")
+                    ModConsole.Msg(ConsoleColor.Red, data.exceptionThrown, LoggingMode.MINIMAL);
+            }
+                
 
             // Log overall loading stats
             if (melonsLoaded > 0 || failedMelons.Count > 0)

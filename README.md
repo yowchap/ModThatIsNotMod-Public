@@ -1,6 +1,8 @@
 # ModThatIsNotMod
 This is a BONEWORKS mod for loading in custom items, making life easier for other mod creators, and a whole lot more.
 
+If you want to support me: <b>https://ko-fi.com/gnonme</b>
+
 Feel free to make a PR for new features and bug fixes, just make sure the code is commented/easily understandable, and doesn't noticeably affect performance.
 
 ## Features
@@ -83,13 +85,16 @@ Rtas - Fixed preferences with mod managers
 
 Extraes - Hosting the mod stats server and helping me get that stuff working
 
-Adidasaurus - Added an extension method to easily damage enemies, fixed mag eject button for oculus store users
+Adidasaurus - Added an extension method to easily damage enemies, fixed mag eject button for oculus store users, improved item loading exception logging
 
 And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 
 <br>
 
 ## Changelogs
+
+#### v0.3.5:
+- Improved the error messages when a .melon file fails to load (Thanks to Adidasaurus#7786)
 
 #### v0.3.4:
 - Fixed mag eject button on the oculus store version of the game (Thanks to Adidasaurus#7786)

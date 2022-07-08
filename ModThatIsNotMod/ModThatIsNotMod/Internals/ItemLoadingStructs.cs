@@ -13,6 +13,7 @@ namespace ModThatIsNotMod.Internals
         public int itemsLoaded;
         public List<LoadedItemData> loadedItems;
         public string errorMessage;
+        public string exceptionThrown;
 
         public LoadedMelonData(int itemsLoaded, List<LoadedItemData> loadedItems)
         {
@@ -23,6 +24,7 @@ namespace ModThatIsNotMod.Internals
             this.itemsLoaded = itemsLoaded;
             this.loadedItems = loadedItems;
             errorMessage = "UNKNOWN ERROR";
+            exceptionThrown = "";
         }
     }
 

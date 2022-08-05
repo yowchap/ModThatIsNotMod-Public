@@ -38,6 +38,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\BONEWORKS\BONEWORKS\MelonLoader\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONEWORKS\BONEWORKS\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -133,6 +137,9 @@
     <Compile Include="Internals\Stats.cs" />
     <Compile Include="Internals\WarningSilencers.cs" />
     <Compile Include="Legacy\EasyMenu.cs" />
+    <Compile Include="Legacy\MultipleFirePoints\FirePoints.cs" />
+    <Compile Include="Legacy\MultipleFirePoints\GunInfo.cs" />
+    <Compile Include="Legacy\MultipleFirePoints\MultipleFirePointsMod.cs" />
     <Compile Include="MiniMods\AutomaticSpawnGuns.cs" />
     <Compile Include="Legacy\BackwardsCompatibility.cs" />
     <Compile Include="Legacy\BoneHook.cs" />

@@ -12,7 +12,6 @@ namespace ModThatIsNotMod.Legacy.MFP
 {
     public static class MultipleFirePoints
     {
-        public static event Action<Gun> OnGunFire;
         private static List<string> gunNames = new List<string>();
         private static List<GunInfo> guns = new List<GunInfo>();
         private static readonly string firePointsParentName = "MultipleFirePoints";

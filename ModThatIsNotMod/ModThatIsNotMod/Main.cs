@@ -26,6 +26,12 @@ namespace ModThatIsNotMod
 
         public override void OnApplicationStart()
         {
+            // Thanks
+            ModConsole.Msg("Many thanks to everyone who has helped in the creation of this mod, including:", LoggingMode.MINIMAL);
+            ModConsole.Msg("Adidasaurus, Extraes, L4rs, Rtas, Trev, and WNP78 for contributing code and support", LoggingMode.MINIMAL);
+            ModConsole.Msg("Chromium for making the predecessors of MTINM with me", LoggingMode.MINIMAL);
+            ModConsole.Msg("And the numerous people who tested early versions, reported bugs, and suggested new features", LoggingMode.MINIMAL);
+
             // Stuff that should happen first I guess
             VersionChecking.CheckModVersion(this, packageUrl);
             Preferences.Initialize();

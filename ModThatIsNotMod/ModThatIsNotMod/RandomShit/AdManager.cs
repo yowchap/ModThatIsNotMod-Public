@@ -57,6 +57,15 @@ namespace ModThatIsNotMod.RandomShit
             "there's a big purple thing and it looks kinda cool i guess \n\nhttps://bonetome.com/boneworks/map/520/",
             "void bad, you need to escape it. \n\nhttps://bonetome.com/boneworks/map/893/",
             "parkour but with melons? \nidk i never played it. \n\nhttps://bonetome.com/boneworks/map/899/",
+            "rip bonetome.com :(",
+            "Solace Station is kinda cool i guess \n\nhttps://boneworks.thunderstore.io/package/TabloidA/Solace_Station/",
+            "hotel? chicago.",
+            "GUYS IM FROM THE FUTURE! \nPROJECT 4 IS CALLED BONELAB!",
+            "You should check out MrPotatoMod by Lucy Cola on thunderstore.io \nThat would be funny I think",
+            "Nexus Mods is mid!",
+            "Oops!... I corrupted the memory profile again",
+            "haha you can't grab this one",
+            "which one is your tabloid tabloid \nwhat"
         };
 
         private static GameObject baseAd;
@@ -74,6 +83,9 @@ namespace ModThatIsNotMod.RandomShit
             tmpro.text = adText;
             newAd.SetActive(true);
             tmpro.alignment = TextAlignmentOptions.Center; // For some reason this has to be set here as well ¯\_(ツ)_/¯
+
+            if (adText == "haha you can't grab this one")
+                newAd.GetComponentInChildren<BoxGrip>().enabled = false;
 
             newAd.AddComponent<Ad>();
             newAd.AddComponent<CustomItem>();

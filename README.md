@@ -85,13 +85,17 @@ Rtas - Fixed preferences with mod managers
 
 Extraes - Hosting the mod stats server and helping me get that stuff working
 
-Adidasaurus - Added an extension method to easily damage enemies, fixed mag eject button for oculus store users, improved item loading exception logging
+Adidasaurus - Added an extension method to easily damage enemies, fixed mag eject button for oculus store users, improved item loading exception logging, added backwards compatibility with items using MultipleFirePoints
 
 And thanks to anyone who tested, told me about bugs, or suggested new features for the mod!
 
 <br>
 
 ## Changelogs
+
+#### v0.3.6:
+- Added backwards compatibility with items using MultipleFirePoints (Thanks to Adidasaurus#7786)
+- A few other tiny additions
 
 #### v0.3.5:
 - Improved the error messages when a .melon file fails to load (Thanks to Adidasaurus#7786)

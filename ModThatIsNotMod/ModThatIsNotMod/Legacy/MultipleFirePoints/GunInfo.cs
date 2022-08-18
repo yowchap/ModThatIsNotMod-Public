@@ -1,13 +1,12 @@
-﻿using System;
+﻿using StressLevelZero.Props.Weapons;
 using System.Collections.Generic;
-using StressLevelZero.Props.Weapons;
 using UnityEngine;
 using static ModThatIsNotMod.Legacy.MFP.FirePoints;
 
 namespace ModThatIsNotMod.Legacy.MFP
 {
-	public class GunInfo
-	{
+    public class GunInfo
+    {
         public Gun gun;
         public int uuid;
 

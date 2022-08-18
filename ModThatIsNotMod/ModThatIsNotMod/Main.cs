@@ -29,7 +29,7 @@ namespace ModThatIsNotMod
             VersionChecking.CheckModVersion(this, packageUrl);
             Preferences.Initialize();
             BackwardsCompatibility.Setup();
-
+            MultipleFirePointsMod.Setup(HarmonyInstance);
             Hooking.SetHarmony(HarmonyInstance);
             WarningSilencers.SilenceWarningMessages();
 

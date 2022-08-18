@@ -25,8 +25,8 @@ namespace ModThatIsNotMod.Legacy.MFP
             if (AppDomain.CurrentDomain.GetAssemblies().Any(i => i.GetName().Name == "MultipleFirePoints"))
             {
                 Type oldMfpType = AccessTools.TypeByName("YOWC.MultipleFirePoints.MultipleFirePointsMod");
-                harmony.Patch(oldMfpType.GetMethod("OnItemAdded"), typeof(MultipleFirePoints).GetMethod("Patch").ToNewHarmonyMethod());
-                harmony.Patch(oldMfpType.GetMethod("OnGunFired"), typeof(MultipleFirePoints).GetMethod("Patch").ToNewHarmonyMethod());
+                harmony.Patch(oldMfpType.GetMethod("OnItemAdded"), prefix: typeof(MultipleFirePoints).GetMethod("Patch").ToNewHarmonyMethod());
+                harmony.Patch(oldMfpType.GetMethod("OnGunFired"), prefix: typeof(MultipleFirePoints).GetMethod("Patch").ToNewHarmonyMethod());
 
             }
 

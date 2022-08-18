@@ -9,10 +9,11 @@ using UnityEngine;
 using System.Reflection;
 using HarmonyLib;
 using System.Linq;
+using static ModThatIsNotMod.Legacy.MFP.FirePoints;
 
-namespace ModThatIsNotMod.Legacy
+namespace ModThatIsNotMod.Legacy.MFP
 {
-	public static class MultipleFirePointsMod
+	public static class MultipleFirePoints
 	{
 		public static event Action<Gun> OnGunFire;
 		private static List<string> gunNames = new List<string>();
@@ -21,76 +22,96 @@ namespace ModThatIsNotMod.Legacy
 		private static readonly string burstFireParentName = "BurstFire";
 		private static readonly string angleVariationParentName = "AngleVariation";
 
+        
 		public static void Setup(HarmonyLib.Harmony harmony)
 		{
 			if (AppDomain.CurrentDomain.GetAssemblies().Any(i => i.GetName().Name == "MultipleFirePoints"))
             {
-				Type t = AccessTools.TypeByName("YOWC.MultipleFirePoints.MultipleFirePointsMod");
-				harmony.Patch(t.GetMethod("OnItemAdded"), typeof(MultipleFirePointsMod).GetMethod("Patch").ToNewHarmonyMethod());
-				harmony.Patch(t.GetMethod("OnGunFired"), typeof(MultipleFirePointsMod).GetMethod("Patch").ToNewHarmonyMethod());
+				Type oldMfpType = AccessTools.TypeByName("YOWC.MultipleFirePoints.MultipleFirePointsMod");
+				harmony.Patch(oldMfpType.GetMethod("OnItemAdded"), typeof(MultipleFirePoints).GetMethod("Patch").ToNewHarmonyMethod());
+				harmony.Patch(oldMfpType.GetMethod("OnGunFired"), typeof(MultipleFirePoints).GetMethod("Patch").ToNewHarmonyMethod());
 
 			}
+            
 			Hooking.OnPostFireGun += OnGunFired;
 			CustomItemsMod.OnItemAdded += OnItemAdded;	
 		}
+
 		public static bool Patch() => false;
 
 		private static void OnItemAdded(GameObject obj)
 		{
-			Transform transform = obj.transform.Find(firePointsParentName);
-			if (transform != null)
-			{
-				Gun gun = obj.GetComponent<Gun>();
-				if (gun != null)
-					AddGun(gun, obj.name, transform);
-			}
+			Transform firePointsParent = obj.transform.Find(firePointsParentName);
+            if(firePointsParent != null)
+            {
+                Gun gun = obj.GetComponent<Gun>();
+                if (gun != null)
+                    AddGun(gun, obj.name, firePointsParent);
+            }
 		}
 
 		private static void OnGunFired(Gun gun)
 		{
-			string name = gun.name;
-			if (ListContainsName(name))
-			{
-				GunInfo gunInfo = GetGunInfo(gun);
-				if (gunInfo == null)
-				{
-					List<Transform> firePoints = FirePoints.GetFirePoints(gun, firePointsParentName);
-					if (firePoints.Count < 2)
-						return;
+			string gunName = gun.name;
+            if(ListContainsName(gunName))
+            {
+                GunInfo gunInfo = GetGunInfo(gun);
+                if(gunInfo == null)
+                {
+                    List<Transform> firePoints = FirePoints.GetFirePoints(gun, firePointsParentName);
+                    if (firePoints.Count < 2)
+                        return;
 
-					int burstFireAmount = GetBurstFireAmount(gun.transform, burstFireParentName);
-					float angleVariation = GetAngleVariation(gun.transform, angleVariationParentName);
-					guns.Add(new GunInfo(gun, firePoints, burstFireAmount, angleVariation));
-					gunInfo = guns[guns.Count - 1];
-				}
-				FirePoints.FirePoint firePoint = gunInfo.firePoints.Dequeue();
-				gunInfo.firePoints.Enqueue(firePoint);
-				gun.firePointTransform = firePoint.transform;
-				Quaternion localRotation = firePoint.baseRotation * Quaternion.AngleAxis(gunInfo.angleVariation, UnityEngine.Random.insideUnitSphere);
-				gun.firePointTransform.localRotation = localRotation;
-				gunInfo.timesFired++;
-				if (gunInfo.timesFired == 1)
-					OnGunFire?.Invoke(gun);
-				if (gunInfo.timesFired >= gunInfo.timesToFire)
-				{
-					gunInfo.shouldFire = false;
-					gun.isAutomatic = gunInfo.shouldBeAutomatic;
-					gunInfo.timesFired = 0;
-					bool shouldBeManual = gunInfo.shouldBeManual;
-					if (shouldBeManual)
-					{
-						gun.isManual = true;
-						gun.cartridgeState = Gun.CartridgeStates.SPENT;
-					}
-				}
-				else
-				{
-					gunInfo.shouldFire = true;
-					gun.isAutomatic = true;
-					gun.PullCartridge();
-					gun.Fire();
-				}
-			}
+                    int burstAmount = GetBurstFireAmount(gun.transform, burstFireParentName);
+                    float angleVariation = GetAngleVariation(gun.transform, angleVariationParentName);
+
+                    guns.Add(new GunInfo(gun, firePoints, burstAmount, angleVariation));
+                    gunInfo = guns[guns.Count - 1];
+                }
+
+                //Get the next fire point
+                FirePoint point = gunInfo.firePoints.Dequeue();
+                gunInfo.firePoints.Enqueue(point);
+
+                gun.firePointTransform = point.transform;
+
+                //Apply random rotational offset
+                Quaternion newRotation = point.baseRotation * Quaternion.AngleAxis(gunInfo.angleVariation, UnityEngine.Random.insideUnitSphere);
+                gun.firePointTransform.localRotation = newRotation;
+
+                gunInfo.timesFired++;
+                
+                if (gun.overrideMagazine == null)
+                {
+                    if (gun.chamberedCartridge == null && gun.magazineSocket != null)
+                        if (!gun.magazineSocket.hasMagazine || (gun.magazineSocket.hasMagazine && gun.magazineSocket.GetMagazine().GetAmmoCount() == 0))
+                        {
+                            gunInfo.timesFired = gunInfo.timesToFire;
+                            // ModConsole.Msg("aaaaaaaaaaaaaaaaaaaaaaa"); // Why is this even here lmao
+                        }
+                }
+
+                if (gunInfo.timesFired >= gunInfo.timesToFire)
+                {
+                    gunInfo.shouldFire = false;
+                    gun.isAutomatic = gunInfo.shouldBeAutomatic;
+                    gunInfo.timesFired = 0;
+
+                    if (gunInfo.shouldBeManual)
+                    {
+                        gun.isManual = true;
+                        gun.cartridgeState = Gun.CartridgeStates.SPENT;
+                    }
+                }
+                else
+                {
+                    gunInfo.shouldFire = true;
+                    gun.isAutomatic = true;
+
+                    gun.PullCartridge();
+                    gun.Fire();
+                }
+            }
 		}
 
 		public static void AddGun(string name)
@@ -102,9 +123,13 @@ namespace ModThatIsNotMod.Legacy
 		{
 			gunNames.Add(name);
 			List<Transform> firePoints = FirePoints.GetFirePoints(firePointsParent);
-			int burstFireAmount = GetBurstFireAmount(gun.transform, burstFireParentName);
+
+			int burstAmount = GetBurstFireAmount(gun.transform, burstFireParentName);
 			float angleVariation = GetAngleVariation(gun.transform, angleVariationParentName);
-			guns.Add(new GunInfo(gun, firePoints, burstFireAmount, angleVariation));
+
+			guns.Add(new GunInfo(gun, firePoints, burstAmount, angleVariation));
+
+			ModConsole.Msg($"Automatically configured {name} with {firePoints.Count} fire points", LoggingMode.DEBUG);
 		}
 
 		private static bool ListContainsName(string name)
@@ -119,26 +144,34 @@ namespace ModThatIsNotMod.Legacy
 
 		private static GunInfo GetGunInfo(Gun gun)
 		{
-			int instanceID = gun.gameObject.GetInstanceID();
-			for (int i = 0; i < guns.Count; i++)
-			{
-				if (guns[i].uuid == instanceID)
-					return guns[i];
-			}
-			return null;
+			int uuid = gun.gameObject.GetInstanceID();
+            for (int i = 0; i < guns.Count; i++)
+            {
+                if (guns[i].uuid == uuid)
+                    return guns[i];
+            }
+            return null;
 		}
 
 		public static int GetBurstFireAmount(Transform gun, string burstFireParentName)
 		{
-			Transform transform = gun.Find(burstFireParentName);
-			return transform != null ? Convert.ToInt32(transform.GetChild(0).name) : 1;
-		}
+            int timesToFire = 1;
+            Transform burstObj = gun.Find(burstFireParentName);
+            if (burstObj != null)
+                timesToFire = int.Parse(burstObj.GetChild(0).name, System.Globalization.CultureInfo.InvariantCulture);
+
+            return timesToFire;
+        }
 
 		public static float GetAngleVariation(Transform gun, string angleVariationParentName)
 		{
-			Transform transform = gun.Find(angleVariationParentName);
-			return transform != null ? (float)Convert.ToDouble(transform.GetChild(0).name) : 0f;
+            float angleVariation = 0;
+            Transform angleObj = gun.Find(angleVariationParentName);
+            if (angleObj != null)
+                angleVariation = float.Parse(angleObj.GetChild(0).name, System.Globalization.CultureInfo.InvariantCulture);
 
-		}
+            return angleVariation;
+
+        }
 	}
 }

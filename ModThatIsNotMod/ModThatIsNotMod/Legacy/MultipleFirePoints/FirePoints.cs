@@ -3,52 +3,54 @@ using System.Collections.Generic;
 using StressLevelZero.Props.Weapons;
 using UnityEngine;
 
-namespace ModThatIsNotMod.Legacy
+namespace ModThatIsNotMod.Legacy.MFP
 {
 	public static class FirePoints
 	{
 		public static List<Transform> GetFirePoints(Gun gun, string firePointsParentName)
 		{
-			List<Transform> list = new List<Transform>();
-			string str = "FirePoint ";
-			Transform transform = gun.transform.Find(str + "(1)");
-			int num = 2;
-			while (transform != null)
+			List<Transform> firePoints = new List<Transform>();
+
+			string firePointName = "FirePoint ";
+			Transform nextPoint = gun.transform.Find(firePointName + "(1)");
+			int index = 2;
+			while (nextPoint != null)
 			{
-				list.Add(transform);
-				transform = gun.transform.Find(str + string.Format("({0})", num));
-				num++;
+				firePoints.Add(nextPoint);
+				nextPoint = gun.transform.Find(firePointName + $"({index})");
+				index++;
 			}
-			if (list.Count == 0)
+
+			if (firePoints.Count == 0)
 			{
-				Transform transform2 = gun.transform.Find(firePointsParentName);
-				if (transform2 != null)
-					list = GetFirePoints(transform2);
+				Transform firePointsParent = gun.transform.Find(firePointsParentName);
+				if (firePointsParent != null)
+					firePoints = GetFirePoints(firePointsParent);
 			}
-			return list;
+
+			return firePoints;
 		}
 
 		public static List<Transform> GetFirePoints(Transform firePointsParent)
 		{
-			List<Transform> list = new List<Transform>();
+			List<Transform> firePoints = new List<Transform>();
 			for (int i = 0; i < firePointsParent.childCount; i++)
 			{
-				list.Add(firePointsParent.GetChild(i));
+				firePoints.Add(firePointsParent.GetChild(i));
 			}
-			return list;
+			return firePoints;
 		}
 
 		public struct FirePoint
 		{
+			public Transform transform;
+			public Quaternion baseRotation;
+
 			public FirePoint(Transform firePoint, Quaternion baseRotation)
 			{
 				this.baseRotation = baseRotation;
 				this.transform = firePoint;
 			}
-
-			public Transform transform;
-
-			public Quaternion baseRotation;
 		}
 	}
 }

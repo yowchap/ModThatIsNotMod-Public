@@ -2,6 +2,7 @@
 using ModThatIsNotMod.BoneMenu;
 using ModThatIsNotMod.Internals;
 using ModThatIsNotMod.Legacy;
+using ModThatIsNotMod.Legacy.MFP;
 using ModThatIsNotMod.MiniMods;
 using ModThatIsNotMod.MonoBehaviours;
 using ModThatIsNotMod.Pooling;
@@ -29,7 +30,7 @@ namespace ModThatIsNotMod
             VersionChecking.CheckModVersion(this, packageUrl);
             Preferences.Initialize();
             BackwardsCompatibility.Setup();
-            MultipleFirePointsMod.Setup(HarmonyInstance);
+            MultipleFirePoints.Setup(HarmonyInstance);
             Hooking.SetHarmony(HarmonyInstance);
             WarningSilencers.SilenceWarningMessages();
 
